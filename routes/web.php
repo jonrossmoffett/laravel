@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\ArticlesController;
+
 Route::get('/', function () {
     return view('home');
 });
@@ -20,5 +22,12 @@ Route::get('/home', function () {
 });
 
 Route::get('/about', function () {
-    return view('about');
+    return view('about', ['articles' => $article = App\Article::take(3)->latest()->get()]);
 });
+
+Route::post('articles', 'ArticlesController@store');
+Route::get('articles', 'ArticlesController@showAll');
+Route::get('articles/create', 'ArticlesController@create');
+Route::get('articles/{article}', 'ArticlesController@show');
+Route::get('articles/{article}/edit', 'ArticlesController@edit');
+route::put('articles/{article}', 'ArticlesController@update');
